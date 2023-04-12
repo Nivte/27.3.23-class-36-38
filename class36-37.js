@@ -18,7 +18,7 @@ function getTasks() {
 
 // create
 function addTask(title) {
-  tasks.push({ title, isDone: false, createdAt: new Date(), doesExist: true });
+  tasks.push({ title, isDone: false, createdAt: new Date(), doesExist:true });
   return tasks[tasks.length - 1];
 }
 
@@ -57,6 +57,9 @@ function changeExistence(index) {
   return tasks[index];
 }
 
+
+
+
 //class 38
 
 //stages in rendering
@@ -86,8 +89,7 @@ function renderEmptyListNotification() {
 
 function renderTaskItem(task, index) {
   if (task.doesExist==true) {
-  return `<li class="list-group-item
- >
+  return `<li class="list-group-item">
 
 <input
   class="form-check-input me-1"
@@ -111,8 +113,9 @@ aria-label="Close"
 onclick= "changeExistence(${index})"
 ></button>
 </li>`;
-} else {return ""}
+  } else return ""
 }
+
 function renderTaskList(tasks = []) {
   let html = `<ul class="list-group">`;
   for (let i = 0; i < tasks.length; i++) {
