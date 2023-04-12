@@ -18,7 +18,7 @@ function getTasks() {
 
 // create
 function addTask(title) {
-  tasks.push({ title, isDone: false, createdAt: new Date() });
+  tasks.push({ title, isDone: false, createdAt: new Date(), doesExist: true });
   return tasks[tasks.length - 1];
 }
 
@@ -50,19 +50,24 @@ function removeTask(index) {
 
 // removeTask(2);
 
+function changeExistence(index) {
+  if (index < 0 || index > tasks.length - 1) {
+    return null;
+  } else tasks[index].doesExist = !tasks[index].doesExist;
+  return tasks[index];
+}
 
 //class 38
 
 //stages in rendering
-//0) 
+//0)
 
 //get necessary html elements by id:
 
 const $button = document.getElementById("button");
 const $input = document.getElementById("to-do-input");
 const $theList = document.getElementById("theList");
-const $delBtn= ""
-
+const $delBtn = "";
 
 // 1) bring 2 html 'components' to js, to be controlled as strings
 
@@ -79,9 +84,11 @@ function renderEmptyListNotification() {
 //flexible data to any li- id, label, checked/unchecked.
 // (and then should be delete button)
 
-
 function renderTaskItem(task, index) {
-  return `<li class="list-group-item">
+  if (task.doesExist==true) {
+  return `<li class="list-group-item
+ >
+
 <input
   class="form-check-input me-1"
   type="checkbox"
@@ -97,15 +104,15 @@ function renderTaskItem(task, index) {
   </label
 >
 <button
-id="delBtn"
+id="delBtn-${index}"
 type="button"
 class="btn-close position-absolute end-0 stretched-link"
 aria-label="Close"
+onclick= "changeExistence(${index})"
 ></button>
 </li>`;
+} else {return ""}
 }
-
-
 function renderTaskList(tasks = []) {
   let html = `<ul class="list-group">`;
   for (let i = 0; i < tasks.length; i++) {
@@ -129,7 +136,6 @@ function renderTaskApp() {
 }
 renderTaskApp();
 
-
 function handleAddTask() {
   addTask($input.value);
 
@@ -138,16 +144,15 @@ function handleAddTask() {
 
   //delBtn:(not working yet)
   // only after 1 task exists you can get this button-
-//   let $delBtn = document.getElementById("delBtn");
+  //   let $delBtn = document.getElementById("delBtn");
 
-//   console.log($delBtn);
+  //   console.log($delBtn);
 
-//   $delBtn.addEventListener ("click", delTask)
+  //   $delBtn.addEventListener ("click", delTask)
 
-// function delTask () {
-// $theList.innerHTML= "";
-// }
-
+  // function delTask () {
+  // $theList.innerHTML= "";
+  // }
 }
 //3- create events to buttons, to add tasks
 
@@ -160,13 +165,8 @@ function alter(e) {
   }
 }
 
-
 //4 not really working
 
 function handleStatusChange(index) {
   changeStatus(index);
-
 }
-
-
-
